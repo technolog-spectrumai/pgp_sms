@@ -2,6 +2,7 @@
 import * as openpgp from 'https://unpkg.com/openpgp@6.3.1/dist/openpgp.min.mjs';
 
 const $ = id => document.getElementById(id);
+const I18N = JSON.parse(document.getElementById('app-i18n')?.textContent || '{}');
 
 function activateTab(name) {
   const config = {
@@ -65,8 +66,8 @@ $('encryptBtn').addEventListener('click', async () => {
     const armoredKey = $('publicKey').value.trim();
     const plaintext = $('plainText').value;
 
-    if (!armoredKey) throw new Error('Paste or load the recipient public key.');
-    if (!plaintext) throw new Error('Enter a message.');
+    if (!armoredKey) throw new Error(I18N.loadRecipientKey);
+    if (!plaintext) throw new Error(I18N.enterMessage);
 
     const publicKey = await openpgp.readKey({ armoredKey });
     const message = await openpgp.createMessage({ text: plaintext });
@@ -88,7 +89,7 @@ $('encryptBtn').addEventListener('click', async () => {
 
     setStatus(
       'encryptStatus',
-      `Encrypted successfully. ${plaintext.length} plaintext characters → ${output.length} transport characters.`
+      `${I18N.encryptedSuccess} ${plaintext.length} ${I18N.charsPlain} → ${output.length} ${I18N.charsTransport}.`
     );
   } catch (err) {
     setStatus('encryptStatus', err?.message || String(err), true);
@@ -104,8 +105,8 @@ $('decryptBtn').addEventListener('click', async () => {
     const encryptedInput = $('cipherText').value.trim();
     const passphrase = $('passphrase').value;
 
-    if (!armoredPrivateKey) throw new Error('Paste or load your private key.');
-    if (!encryptedInput) throw new Error('Paste the encrypted message.');
+    if (!armoredPrivateKey) throw new Error(I18N.loadPrivateKey);
+    if (!encryptedInput) throw new Error(I18N.pasteEncrypted);
 
     let privateKey = await openpgp.readPrivateKey({
       armoredKey: armoredPrivateKey
@@ -139,11 +140,11 @@ $('decryptBtn').addEventListener('click', async () => {
         ? data
         : new TextDecoder().decode(data);
 
-    setStatus('decryptStatus', 'Decryption successful.');
+    setStatus('decryptStatus', I18N.decryptionSuccess);
   } catch (err) {
     setStatus(
       'decryptStatus',
-      'Decryption failed: ' + (err?.message || String(err)),
+      I18N.decryptionFailed + ' ' + (err?.message || String(err)),
       true
     );
   }
@@ -180,10 +181,10 @@ $('generateKeyBtn').addEventListener('click', async () => {
     const email = $('keyEmail').value.trim();
     const passphrase = $('keyPassphrase').value;
 
-    if (!name) throw new Error('Enter a name.');
-    if (!email) throw new Error('Enter an email address.');
+    if (!name) throw new Error(I18N.enterName);
+    if (!email) throw new Error(I18N.enterEmail);
 
-    setStatus('keygenStatus', 'Generating key pair...');
+    setStatus('keygenStatus', I18N.generatingKey);
 
     const options = {
       type: 'ecc',
@@ -203,7 +204,7 @@ $('generateKeyBtn').addEventListener('click', async () => {
 
     setStatus(
       'keygenStatus',
-      'Key pair generated locally. Save the private key securely.'
+      I18N.keyGenerated
     );
   } catch (err) {
     setStatus('keygenStatus', err?.message || String(err), true);
@@ -214,7 +215,7 @@ async function copyFrom(id, statusId) {
   const value = $(id).value;
   if (!value) return;
   await navigator.clipboard.writeText(value);
-  setStatus(statusId, 'Copied to clipboard.');
+  setStatus(statusId, I18N.copied);
 }
 
 $('copyEncryptedBtn').addEventListener('click',
@@ -235,7 +236,7 @@ $('downloadPublicKeyBtn').addEventListener('click', () => {
     'pgp'
   );
   downloadText(`${base}-public.asc`, $('generatedPublicKey').value);
-  setStatus('keygenStatus', 'Public key downloaded.');
+  setStatus('keygenStatus', I18N.publicDownloaded);
 });
 
 $('downloadPrivateKeyBtn').addEventListener('click', () => {
@@ -244,5 +245,5 @@ $('downloadPrivateKeyBtn').addEventListener('click', () => {
     'pgp'
   );
   downloadText(`${base}-private.asc`, $('generatedPrivateKey').value);
-  setStatus('keygenStatus', 'Private key downloaded. Keep it secret.');
+  setStatus('keygenStatus', I18N.privateDownloaded);
 });

@@ -2,249 +2,68 @@
 <main class="page">
   <div class="topbar">
     <div>
-      <div class="brand-kicker">Secure Messaging Utility</div>
+      <div class="brand-kicker">{{ i18n "brand_kicker" }}</div>
       <h1>PGP SMS</h1>
-      <p class="subtitle">
-        Encrypt text for SMS, decrypt incoming OpenPGP messages,
-        and create key pairs directly in the browser.
-      </p>
+      <p class="subtitle">{{ i18n "subtitle" }}</p>
     </div>
-
-    <div class="local-badge">
-      <span class="dot"></span>
-      client-side only
+    <div class="top-actions">
+      <nav class="language-switcher" aria-label="Language">
+        {{ range .AllTranslations }}
+          <a href="{{ .RelPermalink }}" class="lang-link{{ if eq .Language.Lang $.Language.Lang }} active{{ end }}" hreflang="{{ .Language.LanguageCode }}">{{ upper .Language.Lang }}</a>
+        {{ end }}
+      </nav>
+      <div class="local-badge"><span class="dot"></span>{{ i18n "client_side_only" }}</div>
     </div>
   </div>
 
-  <div class="section-label">Tools</div>
+  <div class="section-label">{{ i18n "tools" }}</div>
 
-  <div class="tabs" role="tablist" aria-label="PGP tools">
-    <button class="tab active" id="encryptTab" role="tab" aria-selected="true">
-      <span class="tab-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M7 11V8a5 5 0 0 1 10 0v3"/>
-          <rect x="5" y="11" width="14" height="10" rx="2"/>
-          <path d="M12 15v2"/>
-        </svg>
-      </span>
-      <span>
-        <span class="tab-title">Encrypt</span>
-        <span class="tab-desc">Public key → encrypted SMS payload</span>
-      </span>
-    </button>
-
-    <button class="tab" id="decryptTab" role="tab" aria-selected="false">
-      <span class="tab-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="5" y="11" width="14" height="10" rx="2"/>
-          <path d="M9 11V8a5 5 0 0 1 9.5-2"/>
-          <path d="M12 15v2"/>
-        </svg>
-      </span>
-      <span>
-        <span class="tab-title">Decrypt</span>
-        <span class="tab-desc">Private key → plaintext message</span>
-      </span>
-    </button>
-
-    <button class="tab" id="keygenTab" role="tab" aria-selected="false">
-      <span class="tab-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="8" cy="12" r="3"/>
-          <path d="M11 12h9"/>
-          <path d="M17 12v3"/>
-          <path d="M14 12v2"/>
-        </svg>
-      </span>
-      <span>
-        <span class="tab-title">Create key pair</span>
-        <span class="tab-desc">Generate OpenPGP keys locally</span>
-      </span>
-    </button>
+  <div class="tabs" role="tablist" aria-label="{{ i18n "tools" }}">
+    <button class="tab active" id="encryptTab" role="tab" aria-selected="true"><span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 11V8a5 5 0 0 1 10 0v3"/><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M12 15v2"/></svg></span><span><span class="tab-title">{{ i18n "tab_encrypt" }}</span><span class="tab-desc">{{ i18n "tab_encrypt_desc" }}</span></span></button>
+    <button class="tab" id="decryptTab" role="tab" aria-selected="false"><span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M9 11V8a5 5 0 0 1 9.5-2"/><path d="M12 15v2"/></svg></span><span><span class="tab-title">{{ i18n "tab_decrypt" }}</span><span class="tab-desc">{{ i18n "tab_decrypt_desc" }}</span></span></button>
+    <button class="tab" id="keygenTab" role="tab" aria-selected="false"><span class="tab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="12" r="3"/><path d="M11 12h9"/><path d="M17 12v3"/><path d="M14 12v2"/></svg></span><span><span class="tab-title">{{ i18n "tab_keygen" }}</span><span class="tab-desc">{{ i18n "tab_keygen_desc" }}</span></span></button>
   </div>
 
-  <section class="panel active" id="encryptPanel">
-    <div class="panel-head">
-      <div>
-        <h2>Encrypt message</h2>
-        <p>Use the recipient's public key. The result is formatted for copying into SMS.</p>
-      </div>
-      <div class="panel-code">MODULE / ENC</div>
-    </div>
+  <section class="panel active" id="encryptPanel"><div class="panel-head"><div><h2>{{ i18n "encrypt_title" }}</h2><p>{{ i18n "encrypt_intro" }}</p></div><div class="panel-code">MODULE / ENC</div></div><div class="panel-body"><div class="grid">
+    <div class="field"><div class="field-head"><label for="publicKey">{{ i18n "recipient_public_key" }}</label><span class="hint">{{ i18n "openpgp" }}</span></div><textarea id="publicKey" spellcheck="false" placeholder="-----BEGIN PGP PUBLIC KEY BLOCK-----"></textarea><div class="actions"><label class="file-label" for="publicKeyFile">{{ i18n "load_key_file" }}</label><input id="publicKeyFile" type="file" accept=".asc,.pgp,.txt"></div></div>
+    <div class="field"><div class="field-head"><label for="plainText">{{ i18n "message" }}</label><span class="hint">{{ i18n "plaintext" }}</span></div><textarea id="plainText" placeholder="{{ i18n "message_placeholder" }}"></textarea></div>
+    <div class="field full"><div class="field-head"><label for="encryptedText">{{ i18n "encrypted_sms_payload" }}</label><span class="hint">PGP1 / Base64</span></div><textarea id="encryptedText" spellcheck="false" placeholder="PGP1:..." readonly></textarea><div class="actions"><button class="btn primary" id="encryptBtn">{{ i18n "encrypt" }}</button><button class="btn" id="copyEncryptedBtn">{{ i18n "copy_encrypted" }}</button></div><div id="encryptStatus" class="status"></div></div>
+  </div></div></section>
 
-    <div class="panel-body">
-      <div class="grid">
-        <div class="field">
-          <div class="field-head">
-            <label for="publicKey">Recipient public key</label>
-            <span class="hint">OpenPGP</span>
-          </div>
-          <textarea id="publicKey" spellcheck="false"
-            placeholder="-----BEGIN PGP PUBLIC KEY BLOCK-----"></textarea>
-          <div class="actions">
-            <label class="file-label" for="publicKeyFile">Load key file</label>
-            <input id="publicKeyFile" type="file" accept=".asc,.pgp,.txt">
-          </div>
-        </div>
+  <section class="panel" id="decryptPanel"><div class="panel-head"><div><h2>{{ i18n "decrypt_title" }}</h2><p>{{ i18n "decrypt_intro" }}</p></div><div class="panel-code">MODULE / DEC</div></div><div class="panel-body"><div class="grid">
+    <div class="field"><div class="field-head"><label for="privateKey">{{ i18n "private_key" }}</label><span class="hint">{{ i18n "secret" }}</span></div><textarea id="privateKey" spellcheck="false" placeholder="-----BEGIN PGP PRIVATE KEY BLOCK-----"></textarea><div class="actions"><label class="file-label" for="privateKeyFile">{{ i18n "load_key_file" }}</label><input id="privateKeyFile" type="file" accept=".asc,.pgp,.txt"></div></div>
+    <div class="field"><div class="field-head"><label for="cipherText">{{ i18n "encrypted_message" }}</label><span class="hint">{{ i18n "armored" }}</span></div><textarea id="cipherText" spellcheck="false" placeholder="{{ i18n "encrypted_placeholder" }}"></textarea></div>
+    <div class="field"><div class="field-head"><label for="passphrase">{{ i18n "private_key_passphrase" }}</label><span class="hint">{{ i18n "optional" }}</span></div><input id="passphrase" type="password" autocomplete="off" placeholder="{{ i18n "passphrase_placeholder" }}"></div>
+    <div class="field"><div class="field-head"><label for="decryptedText">{{ i18n "plaintext" }}</label><span class="hint">{{ i18n "output" }}</span></div><textarea id="decryptedText" readonly placeholder="{{ i18n "decrypted_placeholder" }}"></textarea><div class="actions"><button class="btn primary" id="decryptBtn">{{ i18n "decrypt" }}</button><button class="btn" id="copyDecryptedBtn">{{ i18n "copy_plaintext" }}</button></div><div id="decryptStatus" class="status"></div></div>
+  </div></div></section>
 
-        <div class="field">
-          <div class="field-head">
-            <label for="plainText">Message</label>
-            <span class="hint">plaintext</span>
-          </div>
-          <textarea id="plainText" placeholder="Write the message to encrypt..."></textarea>
-        </div>
+  <section class="panel" id="keygenPanel"><div class="panel-head"><div><h2>{{ i18n "keygen_title" }}</h2><p>{{ i18n "keygen_intro" }}</p></div><div class="panel-code">MODULE / KEYGEN</div></div><div class="panel-body"><div class="grid">
+    <div class="field"><div class="field-head"><label for="keyName">{{ i18n "name" }}</label><span class="hint">{{ i18n "identity" }}</span></div><input id="keyName" type="text" autocomplete="name" placeholder="Alice"></div>
+    <div class="field"><div class="field-head"><label for="keyEmail">{{ i18n "email" }}</label><span class="hint">{{ i18n "identity" }}</span></div><input id="keyEmail" type="email" autocomplete="email" placeholder="alice@example.com"></div>
+    <div class="field full"><div class="field-head"><label for="keyPassphrase">{{ i18n "key_passphrase" }}</label><span class="hint">{{ i18n "recommended" }}</span></div><input id="keyPassphrase" type="password" autocomplete="new-password" placeholder="{{ i18n "key_passphrase_placeholder" }}"><div class="actions"><button class="btn primary" id="generateKeyBtn">{{ i18n "generate_key_pair" }}</button></div><div id="keygenStatus" class="status"></div></div>
+    <div class="field"><div class="field-head"><label for="generatedPublicKey">{{ i18n "public_key" }}</label><span class="hint">{{ i18n "shareable" }}</span></div><textarea id="generatedPublicKey" readonly placeholder="{{ i18n "generated_public_placeholder" }}"></textarea><div class="actions"><button class="btn" id="copyPublicKeyBtn">{{ i18n "copy" }}</button><button class="btn" id="downloadPublicKeyBtn">{{ i18n "download_asc" }}</button></div></div>
+    <div class="field"><div class="field-head"><label for="generatedPrivateKey">{{ i18n "private_key" }}</label><span class="hint">{{ i18n "keep_secret" }}</span></div><textarea id="generatedPrivateKey" readonly placeholder="{{ i18n "generated_private_placeholder" }}"></textarea><div class="actions"><button class="btn" id="copyPrivateKeyBtn">{{ i18n "copy" }}</button><button class="btn" id="downloadPrivateKeyBtn">{{ i18n "download_asc" }}</button></div></div>
+  </div></div></section>
 
-        <div class="field full">
-          <div class="field-head">
-            <label for="encryptedText">Encrypted SMS payload</label>
-            <span class="hint">PGP1 / Base64</span>
-          </div>
-          <textarea id="encryptedText" spellcheck="false"
-            placeholder="PGP1:..." readonly></textarea>
-          <div class="actions">
-            <button class="btn primary" id="encryptBtn">Encrypt</button>
-            <button class="btn" id="copyEncryptedBtn">Copy encrypted text</button>
-          </div>
-          <div id="encryptStatus" class="status"></div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="footer-note"><code>PGP1:</code> {{ i18n "footer_prefix" }} {{ i18n "footer_suffix" }} <code>PGP1:</code>. {{ i18n "footer_browser" }}</div>
 
-  <section class="panel" id="decryptPanel">
-    <div class="panel-head">
-      <div>
-        <h2>Decrypt message</h2>
-        <p>Paste the encrypted SMS payload and unlock your private key if required.</p>
-      </div>
-      <div class="panel-code">MODULE / DEC</div>
-    </div>
-
-    <div class="panel-body">
-      <div class="grid">
-        <div class="field">
-          <div class="field-head">
-            <label for="privateKey">Private key</label>
-            <span class="hint">secret</span>
-          </div>
-          <textarea id="privateKey" spellcheck="false"
-            placeholder="-----BEGIN PGP PRIVATE KEY BLOCK-----"></textarea>
-          <div class="actions">
-            <label class="file-label" for="privateKeyFile">Load key file</label>
-            <input id="privateKeyFile" type="file" accept=".asc,.pgp,.txt">
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label for="cipherText">Encrypted message</label>
-            <span class="hint">PGP1 / armored</span>
-          </div>
-          <textarea id="cipherText" spellcheck="false"
-            placeholder="Paste PGP1:... or an armored OpenPGP message"></textarea>
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label for="passphrase">Private-key passphrase</label>
-            <span class="hint">optional</span>
-          </div>
-          <input id="passphrase" type="password" autocomplete="off"
-            placeholder="Leave empty if the key is not protected">
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label for="decryptedText">Plaintext</label>
-            <span class="hint">output</span>
-          </div>
-          <textarea id="decryptedText" readonly
-            placeholder="Decrypted message will appear here"></textarea>
-          <div class="actions">
-            <button class="btn primary" id="decryptBtn">Decrypt</button>
-            <button class="btn" id="copyDecryptedBtn">Copy plaintext</button>
-          </div>
-          <div id="decryptStatus" class="status"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="panel" id="keygenPanel">
-    <div class="panel-head">
-      <div>
-        <h2>Create key pair</h2>
-        <p>Generate a public/private OpenPGP key pair locally in the browser.</p>
-      </div>
-      <div class="panel-code">MODULE / KEYGEN</div>
-    </div>
-
-    <div class="panel-body">
-      <div class="grid">
-        <div class="field">
-          <div class="field-head">
-            <label for="keyName">Name</label>
-            <span class="hint">identity</span>
-          </div>
-          <input id="keyName" type="text" autocomplete="name" placeholder="Alice">
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label for="keyEmail">Email</label>
-            <span class="hint">identity</span>
-          </div>
-          <input id="keyEmail" type="email" autocomplete="email"
-            placeholder="alice@example.com">
-        </div>
-
-        <div class="field full">
-          <div class="field-head">
-            <label for="keyPassphrase">Private-key passphrase</label>
-            <span class="hint">recommended</span>
-          </div>
-          <input id="keyPassphrase" type="password" autocomplete="new-password"
-            placeholder="Optional, but recommended">
-          <div class="actions">
-            <button class="btn primary" id="generateKeyBtn">Generate key pair</button>
-          </div>
-          <div id="keygenStatus" class="status"></div>
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label for="generatedPublicKey">Public key</label>
-            <span class="hint">shareable</span>
-          </div>
-          <textarea id="generatedPublicKey" readonly
-            placeholder="Generated public key will appear here"></textarea>
-          <div class="actions">
-            <button class="btn" id="copyPublicKeyBtn">Copy</button>
-            <button class="btn" id="downloadPublicKeyBtn">Download .asc</button>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="field-head">
-            <label for="generatedPrivateKey">Private key</label>
-            <span class="hint">keep secret</span>
-          </div>
-          <textarea id="generatedPrivateKey" readonly
-            placeholder="Generated private key will appear here"></textarea>
-          <div class="actions">
-            <button class="btn" id="copyPrivateKeyBtn">Copy</button>
-            <button class="btn" id="downloadPrivateKeyBtn">Download .asc</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="footer-note">
-    <code>PGP1:</code> is only a transport wrapper:
-    Base64-encoded binary OpenPGP data prefixed with <code>PGP1:</code>.
-    Cryptographic operations happen in the browser.
-  </div>
+  <script id="app-i18n" type="application/json">{
+    "loadRecipientKey": {{ i18n "js_load_recipient_key" | jsonify }},
+    "enterMessage": {{ i18n "js_enter_message" | jsonify }},
+    "encryptedSuccess": {{ i18n "js_encrypted_success" | jsonify }},
+    "charsPlain": {{ i18n "js_chars_plain" | jsonify }},
+    "charsTransport": {{ i18n "js_chars_transport" | jsonify }},
+    "loadPrivateKey": {{ i18n "js_load_private_key" | jsonify }},
+    "pasteEncrypted": {{ i18n "js_paste_encrypted" | jsonify }},
+    "decryptionSuccess": {{ i18n "js_decryption_success" | jsonify }},
+    "decryptionFailed": {{ i18n "js_decryption_failed" | jsonify }},
+    "enterName": {{ i18n "js_enter_name" | jsonify }},
+    "enterEmail": {{ i18n "js_enter_email" | jsonify }},
+    "generatingKey": {{ i18n "js_generating_key" | jsonify }},
+    "keyGenerated": {{ i18n "js_key_generated" | jsonify }},
+    "copied": {{ i18n "js_copied" | jsonify }},
+    "publicDownloaded": {{ i18n "js_public_downloaded" | jsonify }},
+    "privateDownloaded": {{ i18n "js_private_downloaded" | jsonify }}
+  }</script>
 </main>
 {{ end }}

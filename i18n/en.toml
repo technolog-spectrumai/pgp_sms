@@ -1,0 +1,209 @@
+[brand_kicker]
+other = "Secure Messaging Utility"
+
+[subtitle]
+other = "Encrypt text for SMS, decrypt incoming OpenPGP messages, and create key pairs directly in the browser."
+
+[client_side_only]
+other = "client-side only"
+
+[tools]
+other = "Tools"
+
+[tab_encrypt]
+other = "Encrypt"
+
+[tab_encrypt_desc]
+other = "Public key → encrypted SMS payload"
+
+[tab_decrypt]
+other = "Decrypt"
+
+[tab_decrypt_desc]
+other = "Private key → plaintext message"
+
+[tab_keygen]
+other = "Create key pair"
+
+[tab_keygen_desc]
+other = "Generate OpenPGP keys locally"
+
+[encrypt_title]
+other = "Encrypt message"
+
+[encrypt_intro]
+other = "Use the recipient's public key. The result is formatted for copying into SMS."
+
+[recipient_public_key]
+other = "Recipient public key"
+
+[openpgp]
+other = "OpenPGP"
+
+[load_key_file]
+other = "Load key file"
+
+[message]
+other = "Message"
+
+[plaintext]
+other = "plaintext"
+
+[message_placeholder]
+other = "Write the message to encrypt..."
+
+[encrypted_sms_payload]
+other = "Encrypted SMS payload"
+
+[encrypt]
+other = "Encrypt"
+
+[copy_encrypted]
+other = "Copy encrypted text"
+
+[decrypt_title]
+other = "Decrypt message"
+
+[decrypt_intro]
+other = "Paste the encrypted SMS payload and unlock your private key if required."
+
+[private_key]
+other = "Private key"
+
+[secret]
+other = "secret"
+
+[encrypted_message]
+other = "Encrypted message"
+
+[armored]
+other = "PGP1 / armored"
+
+[encrypted_placeholder]
+other = "Paste PGP1:... or an armored OpenPGP message"
+
+[private_key_passphrase]
+other = "Private-key passphrase"
+
+[optional]
+other = "optional"
+
+[passphrase_placeholder]
+other = "Leave empty if the key is not protected"
+
+[output]
+other = "output"
+
+[decrypted_placeholder]
+other = "Decrypted message will appear here"
+
+[decrypt]
+other = "Decrypt"
+
+[copy_plaintext]
+other = "Copy plaintext"
+
+[keygen_title]
+other = "Create key pair"
+
+[keygen_intro]
+other = "Generate a public/private OpenPGP key pair locally in the browser."
+
+[name]
+other = "Name"
+
+[identity]
+other = "identity"
+
+[email]
+other = "Email"
+
+[key_passphrase]
+other = "Private-key passphrase"
+
+[recommended]
+other = "recommended"
+
+[key_passphrase_placeholder]
+other = "Optional, but recommended"
+
+[generate_key_pair]
+other = "Generate key pair"
+
+[public_key]
+other = "Public key"
+
+[shareable]
+other = "shareable"
+
+[generated_public_placeholder]
+other = "Generated public key will appear here"
+
+[copy]
+other = "Copy"
+
+[download_asc]
+other = "Download .asc"
+
+[generated_private_placeholder]
+other = "Generated private key will appear here"
+
+[keep_secret]
+other = "keep secret"
+
+[footer_prefix]
+other = "is only a transport wrapper:"
+
+[footer_suffix]
+other = "Base64-encoded binary OpenPGP data prefixed with"
+
+[footer_browser]
+other = "Cryptographic operations happen in the browser."
+
+[js_load_recipient_key]
+other = "Paste or load the recipient public key."
+
+[js_enter_message]
+other = "Enter a message."
+
+[js_encrypted_success]
+other = "Encrypted successfully."
+
+[js_chars_plain]
+other = "plaintext characters"
+
+[js_chars_transport]
+other = "transport characters"
+
+[js_load_private_key]
+other = "Paste or load your private key."
+
+[js_paste_encrypted]
+other = "Paste the encrypted message."
+
+[js_decryption_success]
+other = "Decryption successful."
+
+[js_decryption_failed]
+other = "Decryption failed:"
+
+[js_enter_name]
+other = "Enter a name."
+
+[js_enter_email]
+other = "Enter an email address."
+
+[js_generating_key]
+other = "Generating key pair..."
+
+[js_key_generated]
+other = "Key pair generated locally. Save the private key securely."
+
+[js_copied]
+other = "Copied to clipboard."
+
+[js_public_downloaded]
+other = "Public key downloaded."
+
+[js_private_downloaded]
+other = "Private key downloaded. Keep it secret."

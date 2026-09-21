@@ -1,0 +1,209 @@
+[brand_kicker]
+other = "Narzędzie do bezpiecznej komunikacji"
+
+[subtitle]
+other = "Szyfruj tekst do wysłania przez SMS, odszyfrowuj wiadomości OpenPGP i twórz pary kluczy bezpośrednio w przeglądarce."
+
+[client_side_only]
+other = "tylko po stronie klienta"
+
+[tools]
+other = "Narzędzia"
+
+[tab_encrypt]
+other = "Szyfruj"
+
+[tab_encrypt_desc]
+other = "Klucz publiczny → zaszyfrowany ładunek SMS"
+
+[tab_decrypt]
+other = "Odszyfruj"
+
+[tab_decrypt_desc]
+other = "Klucz prywatny → tekst jawny"
+
+[tab_keygen]
+other = "Utwórz parę kluczy"
+
+[tab_keygen_desc]
+other = "Generuj klucze OpenPGP lokalnie"
+
+[encrypt_title]
+other = "Szyfruj wiadomość"
+
+[encrypt_intro]
+other = "Użyj klucza publicznego odbiorcy. Wynik jest przygotowany do skopiowania do SMS."
+
+[recipient_public_key]
+other = "Klucz publiczny odbiorcy"
+
+[openpgp]
+other = "OpenPGP"
+
+[load_key_file]
+other = "Wczytaj plik klucza"
+
+[message]
+other = "Wiadomość"
+
+[plaintext]
+other = "tekst jawny"
+
+[message_placeholder]
+other = "Wpisz wiadomość do zaszyfrowania..."
+
+[encrypted_sms_payload]
+other = "Zaszyfrowany ładunek SMS"
+
+[encrypt]
+other = "Szyfruj"
+
+[copy_encrypted]
+other = "Kopiuj zaszyfrowany tekst"
+
+[decrypt_title]
+other = "Odszyfruj wiadomość"
+
+[decrypt_intro]
+other = "Wklej zaszyfrowany ładunek SMS i odblokuj klucz prywatny, jeśli jest to wymagane."
+
+[private_key]
+other = "Klucz prywatny"
+
+[secret]
+other = "tajne"
+
+[encrypted_message]
+other = "Zaszyfrowana wiadomość"
+
+[armored]
+other = "PGP1 / armored"
+
+[encrypted_placeholder]
+other = "Wklej PGP1:... albo wiadomość OpenPGP w formacie armored"
+
+[private_key_passphrase]
+other = "Hasło klucza prywatnego"
+
+[optional]
+other = "opcjonalne"
+
+[passphrase_placeholder]
+other = "Pozostaw puste, jeśli klucz nie jest chroniony"
+
+[output]
+other = "wynik"
+
+[decrypted_placeholder]
+other = "Odszyfrowana wiadomość pojawi się tutaj"
+
+[decrypt]
+other = "Odszyfruj"
+
+[copy_plaintext]
+other = "Kopiuj tekst jawny"
+
+[keygen_title]
+other = "Utwórz parę kluczy"
+
+[keygen_intro]
+other = "Wygeneruj parę kluczy publiczny/prywatny OpenPGP lokalnie w przeglądarce."
+
+[name]
+other = "Nazwa"
+
+[identity]
+other = "tożsamość"
+
+[email]
+other = "E-mail"
+
+[key_passphrase]
+other = "Hasło klucza prywatnego"
+
+[recommended]
+other = "zalecane"
+
+[key_passphrase_placeholder]
+other = "Opcjonalne, ale zalecane"
+
+[generate_key_pair]
+other = "Generuj parę kluczy"
+
+[public_key]
+other = "Klucz publiczny"
+
+[shareable]
+other = "do udostępniania"
+
+[generated_public_placeholder]
+other = "Wygenerowany klucz publiczny pojawi się tutaj"
+
+[copy]
+other = "Kopiuj"
+
+[download_asc]
+other = "Pobierz .asc"
+
+[generated_private_placeholder]
+other = "Wygenerowany klucz prywatny pojawi się tutaj"
+
+[keep_secret]
+other = "zachowaj w tajemnicy"
+
+[footer_prefix]
+other = "to tylko opakowanie transportowe:"
+
+[footer_suffix]
+other = "Dane binarne OpenPGP zakodowane w Base64 i poprzedzone prefiksem"
+
+[footer_browser]
+other = "Operacje kryptograficzne odbywają się w przeglądarce."
+
+[js_load_recipient_key]
+other = "Wklej lub wczytaj klucz publiczny odbiorcy."
+
+[js_enter_message]
+other = "Wpisz wiadomość."
+
+[js_encrypted_success]
+other = "Szyfrowanie zakończone."
+
+[js_chars_plain]
+other = "znaków tekstu jawnego"
+
+[js_chars_transport]
+other = "znaków transportowych"
+
+[js_load_private_key]
+other = "Wklej lub wczytaj klucz prywatny."
+
+[js_paste_encrypted]
+other = "Wklej zaszyfrowaną wiadomość."
+
+[js_decryption_success]
+other = "Odszyfrowano poprawnie."
+
+[js_decryption_failed]
+other = "Odszyfrowanie nie powiodło się:"
+
+[js_enter_name]
+other = "Wpisz nazwę."
+
+[js_enter_email]
+other = "Wpisz adres e-mail."
+
+[js_generating_key]
+other = "Generowanie pary kluczy..."
+
+[js_key_generated]
+other = "Para kluczy została wygenerowana lokalnie. Zapisz bezpiecznie klucz prywatny."
+
+[js_copied]
+other = "Skopiowano do schowka."
+
+[js_public_downloaded]
+other = "Pobrano klucz publiczny."
+
+[js_private_downloaded]
+other = "Pobrano klucz prywatny. Zachowaj go w tajemnicy."

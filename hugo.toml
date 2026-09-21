@@ -1,8 +1,20 @@
 baseURL = "/"
-languageCode = "en"
 title = "PGP SMS"
-
+defaultContentLanguage = "pl"
+defaultContentLanguageInSubdir = false
 disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
 
-[params]
-  description = "Client-side OpenPGP utility for SMS."
+[languages]
+  [languages.pl]
+    languageCode = "pl-PL"
+    languageName = "Polski"
+    weight = 1
+    [languages.pl.params]
+      description = "Klienckie narzędzie OpenPGP do wiadomości SMS."
+
+  [languages.en]
+    languageCode = "en"
+    languageName = "English"
+    weight = 2
+    [languages.en.params]
+      description = "Client-side OpenPGP utility for SMS."

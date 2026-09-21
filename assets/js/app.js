@@ -111,11 +111,23 @@ $('decryptBtn').addEventListener('click', async () => {
       armoredKey: armoredPrivateKey
     });
 
-    if (passphrase) {
-      privateKey = await openpgp.decryptKey({
-        privateKey,
-        passphrase
-      });
+    if (!privateKey.isDecrypted()) {
+      if (!passphrase) {
+        throw new Error(
+          'This private key is passphrase-protected. Enter its passphrase to decrypt.'
+        );
+      }
+
+      try {
+        privateKey = await openpgp.decryptKey({
+          privateKey,
+          passphrase
+        });
+      } catch (err) {
+        throw new Error(
+          'Could not unlock the private key. Check the passphrase and try again.'
+        );
+      }
     }
 
     let message;

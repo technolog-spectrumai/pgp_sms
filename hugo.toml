@@ -1,0 +1,8 @@
+baseURL = "/"
+languageCode = "en"
+title = "PGP SMS"
+
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
+
+[params]
+  description = "Client-side OpenPGP utility for SMS."

@@ -69,6 +69,7 @@ input[type="file"] { display: none; }
 .status.error { color: var(--danger); }
 .footer-note { margin-top: 14px; color: var(--muted-2); font-size: .72rem; line-height: 1.5; }
 code { padding: 2px 5px; border: 1px solid var(--line-soft); border-radius: 5px; background: var(--field); color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; font-size: .7rem; }
+.copyright { margin-top: 8px; color: var(--muted-2); font-family: "SFMono-Regular", Consolas, monospace; font-size: .68rem; letter-spacing: .04em; }
 @media (max-width: 800px) {
   .topbar { align-items: flex-start; flex-direction: column; }
   .tabs { grid-template-columns: 1fr; }

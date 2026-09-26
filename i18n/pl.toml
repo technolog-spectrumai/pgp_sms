@@ -207,3 +207,12 @@ other = "Pobrano klucz publiczny."
 
 [js_private_downloaded]
 other = "Pobrano klucz prywatny. Zachowaj go w tajemnicy."
+
+[help_open]
+other = "Otwórz instrukcję"
+
+[help_title]
+other = "Instrukcja"
+
+[help_close]
+other = "Zamknij"

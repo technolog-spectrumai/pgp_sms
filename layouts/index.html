@@ -13,6 +13,7 @@
         {{ end }}
       </nav>
       <div class="local-badge"><span class="dot"></span>{{ i18n "client_side_only" }}</div>
+      <button class="help-btn" id="helpBtn" type="button" aria-haspopup="dialog" aria-controls="helpDialog" aria-label="{{ i18n "help_open" }}" title="{{ i18n "help_open" }}">?</button>
     </div>
   </div>
 
@@ -47,6 +48,11 @@
 
   <div class="footer-note"><code>PGP1:</code> {{ i18n "footer_prefix" }} {{ i18n "footer_suffix" }} <code>PGP1:</code>. {{ i18n "footer_browser" }}</div>
   <div class="copyright">© {{ now.Year }} Basilisk Systems</div>
+
+  <dialog class="help-dialog" id="helpDialog" aria-labelledby="helpTitle">
+    <div class="help-head"><h2 id="helpTitle">{{ i18n "help_title" }}</h2><button class="help-close" id="helpClose" type="button" aria-label="{{ i18n "help_close" }}" title="{{ i18n "help_close" }}">&times;</button></div>
+    <div class="help-body">{{ partial (printf "manual/%s.html" .Language.Lang) . }}</div>
+  </dialog>
 
   <script id="app-i18n" type="application/json">{
     "loadRecipientKey": {{ i18n "js_load_recipient_key" | jsonify }},

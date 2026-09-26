@@ -1,8 +1,6 @@
 
 import * as openpgp from 'https://unpkg.com/openpgp@6.3.1/dist/openpgp.min.mjs';
-import {
-  Encoder, Decoder, Detector, Byte, binarize, grayscale
-} from './vendor/qrcode.min.js';
+import { Encoder, Byte } from './vendor/qrcode.min.js';
 
 const $ = id => document.getElementById(id);
 
@@ -280,7 +278,6 @@ const QUIET_MODULES = 4;
 const MONO = '"SFMono-Regular", Consolas, ui-monospace, monospace';
 
 let qrState = { text: '', kind: '', filenameBase: 'key' };
-let decodedKey = { text: '', isPrivate: false };
 
 function groupFingerprint(fp) {
   return (fp.toUpperCase().match(/.{1,4}/g) || []).join(' ');
@@ -409,7 +406,6 @@ async function showQrFor(armoredText, fallbackKind) {
   const text = (armoredText || '').trim();
 
   activateTab('qr');
-  setStatus('qrReadStatus', '');
 
   if (!text) {
     qrState = { text: '', kind: '', filenameBase: 'key' };
@@ -532,118 +528,6 @@ function downloadQr() {
   }, 'image/png');
 }
 
-// Decode a QR image file. The detector returns candidate regions, so try each
-// one until a decode succeeds rather than giving up on the first failure.
-async function decodeQrImage(file) {
-  const bitmap = await createImageBitmap(file);
-
-  try {
-    const canvas = document.createElement('canvas');
-    canvas.width = bitmap.width;
-    canvas.height = bitmap.height;
-
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(bitmap, 0, 0);
-
-    const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const binarized = binarize(grayscale(image), image.width, image.height);
-    const decoder = new Decoder();
-    const detected = new Detector().detect(binarized);
-
-    let current = detected.next();
-    while (!current.done) {
-      try {
-        return decoder.decode(current.value.matrix).content;
-      } catch {
-        // This candidate region was not a readable QR code; try the next.
-      }
-      current = detected.next(false);
-    }
-    return null;
-  } finally {
-    bitmap.close?.();
-  }
-}
-
-async function handleQrImage() {
-  const input = $('qrImageFile');
-  if (!input.files?.length) return;
-
-  const file = input.files[0];
-  input.value = '';
-
-  setStatus('qrReadStatus', `Reading ${file.name}...`);
-  $('qrDecoded').value = '';
-  decodedKey = { text: '', isPrivate: false };
-
-  let content;
-  try {
-    content = await decodeQrImage(file);
-  } catch (err) {
-    setStatus('qrReadStatus', 'Could not read that image: ' + (err?.message || String(err)), true);
-    return;
-  }
-
-  if (!content) {
-    setStatus(
-      'qrReadStatus',
-      'No QR code found in that image. Crop to the code, keep the white border, '
-        + 'and avoid blur or glare.',
-      true
-    );
-    return;
-  }
-
-  let info;
-  try {
-    info = await describeKey(content);
-  } catch {
-    $('qrDecoded').value = content;
-    setStatus(
-      'qrReadStatus',
-      'Decoded the QR code, but it does not contain an OpenPGP key.',
-      true
-    );
-    return;
-  }
-
-  decodedKey = { text: content, isPrivate: info.isPrivate };
-  $('qrDecoded').value = content;
-  setStatus(
-    'qrReadStatus',
-    `Found a ${info.isPrivate ? 'private' : 'public'} key for `
-      + `${info.userID || 'unknown user'} (${groupFingerprint(info.fingerprint)}).`
-  );
-}
-
-function useDecodedKey(target) {
-  if (!decodedKey.text) {
-    setStatus('qrReadStatus', 'Read a QR image first.', true);
-    return;
-  }
-
-  if (target === 'encrypt') {
-    if (decodedKey.isPrivate) {
-      setStatus('qrReadStatus', 'That is a private key. Encrypting needs the recipient public key.', true);
-      return;
-    }
-    $('publicKey').value = decodedKey.text;
-    activateTab('encrypt');
-    setStatus('encryptStatus', 'Public key loaded from QR image.');
-    return;
-  }
-
-  if (!decodedKey.isPrivate) {
-    setStatus('qrReadStatus', 'That is a public key. Decrypting needs your private key.', true);
-    return;
-  }
-  $('privateKey').value = decodedKey.text;
-  activateTab('decrypt');
-  setStatus('decryptStatus', 'Private key loaded from QR image.');
-}
-
 $('showPublicQrBtn').addEventListener('click',
   () => showQrFor($('generatedPublicKey').value, 'generated public key'));
 
@@ -659,10 +543,3 @@ $('showDecryptPrivateQrBtn').addEventListener('click',
 $('generateQrBtn').addEventListener('click', () => generateQr());
 $('qrLevel').addEventListener('change', () => { if (qrState.text) generateQr(); });
 $('downloadQrBtn').addEventListener('click', downloadQr);
-$('qrImageFile').addEventListener('change', handleQrImage);
-
-$('copyDecodedKeyBtn').addEventListener('click',
-  () => copyFrom('qrDecoded', 'qrReadStatus'));
-
-$('useDecodedPublicBtn').addEventListener('click', () => useDecodedKey('encrypt'));
-$('useDecodedPrivateBtn').addEventListener('click', () => useDecodedKey('decrypt'));

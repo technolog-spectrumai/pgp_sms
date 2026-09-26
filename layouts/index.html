@@ -75,7 +75,7 @@
       </span>
       <span>
         <span class="tab-title">Key QR</span>
-        <span class="tab-desc">Export and read keys as QR images</span>
+        <span class="tab-desc">Export keys as QR images</span>
       </span>
     </button>
   </div>
@@ -266,7 +266,7 @@
     <div class="panel-head">
       <div>
         <h2>Key QR</h2>
-        <p>Export an OpenPGP key as a QR image, or read a key back from an image file.</p>
+        <p>Export an OpenPGP key as a QR image you can print or scan from another device.</p>
       </div>
       <div class="panel-code">MODULE / QR</div>
     </div>
@@ -320,22 +320,6 @@
           <div id="qrStatus" class="status"></div>
         </div>
 
-        <div class="field full">
-          <div class="field-head">
-            <label for="qrDecoded">Read key from image</label>
-            <span class="hint">PNG / JPEG</span>
-          </div>
-          <textarea id="qrDecoded" spellcheck="false" readonly
-            placeholder="Upload a QR image and the key it contains will appear here"></textarea>
-          <div class="actions">
-            <label class="file-label" for="qrImageFile">Load QR image</label>
-            <input id="qrImageFile" type="file" accept="image/*">
-            <button class="btn" id="copyDecodedKeyBtn">Copy key</button>
-            <button class="btn" id="useDecodedPublicBtn">Use for encrypting</button>
-            <button class="btn" id="useDecodedPrivateBtn">Use for decrypting</button>
-          </div>
-          <div id="qrReadStatus" class="status"></div>
-        </div>
       </div>
     </div>
   </section>

@@ -1,0 +1,96 @@
+<ul class="help-toc">
+  <li><a href="#m-what">Co to jest</a></li>
+  <li><a href="#m-words">Pojęcia</a></li>
+  <li><a href="#m-start">Pierwsze kroki</a></li>
+  <li><a href="#m-encrypt">Szyfrowanie</a></li>
+  <li><a href="#m-decrypt">Odszyfrowanie</a></li>
+  <li><a href="#m-keys">Tworzenie kluczy</a></li>
+  <li><a href="#m-problems">Problemy</a></li>
+  <li><a href="#m-safety">Bezpieczeństwo</a></li>
+  <li><a href="#m-test">Szybki test</a></li>
+</ul>
+
+<h3 id="m-what">Do czego służy to narzędzie</h3>
+<p>PGP SMS zamienia krótką wiadomość w nieczytelny ciąg znaków, który może odczytać tylko jedna wybrana osoba. Taki tekst możesz potem wysłać SMS-em, e-mailem lub w komunikatorze. Ktoś, kto go przechwyci, zobaczy tylko bezsensowne znaki.</p>
+<p><strong>Nic nie opuszcza Twojej przeglądarki.</strong> Za tą stroną nie stoi żaden serwer. Wiadomości, klucze i hasła nigdzie nie są wysyłane, a zamknięcie karty je usuwa.</p>
+
+<h3 id="m-words">Najważniejsze pojęcia, prostymi słowami</h3>
+<p>Pomyśl o kłódce i kluczyku do niej.</p>
+<dl>
+  <dt>Klucz publiczny: otwarta kłódka</dt>
+  <dd>Możesz rozdawać jego kopie bez obaw. Każdy, kto go ma, może zamknąć dla Ciebie wiadomość, ale nikt nie może nim jej otworzyć. Można go bezpiecznie wysłać e-mailem lub opublikować.</dd>
+  <dt>Klucz prywatny: jedyny kluczyk do tej kłódki</dt>
+  <dd>Otwiera wiadomości zamknięte Twoim kluczem publicznym. Trzymaj go w tajemnicy, jak klucze do domu. Kto go ma, ten czyta Twoje wiadomości.</dd>
+  <dt>Para kluczy</dt>
+  <dd>Pasujące do siebie klucz publiczny i prywatny, tworzone razem. Każda osoba potrzebuje własnej pary.</dd>
+  <dt>Hasło klucza</dt>
+  <dd>Hasło chroniące klucz prywatny. Nawet jeśli ktoś skopiuje plik z kluczem, bez hasła nie będzie mógł go użyć.</dd>
+  <dt>Zaszyfrowana wiadomość, czyli tekst <code>PGP1:</code></dt>
+  <dd>Nieczytelny wynik szyfrowania. Zaczyna się od <code>PGP1:</code>, po czym następuje długi ciąg liter i cyfr. Trzeba go skopiować w całości: brak choćby jednego znaku go psuje.</dd>
+</dl>
+
+<h3 id="m-start">Pierwsze kroki</h3>
+<ol>
+  <li>Otwórz kartę <strong>Utwórz parę kluczy</strong> i utwórz własną parę kluczy.</li>
+  <li>Zapisz klucz prywatny przyciskiem <strong>Pobierz .asc</strong> i przechowuj plik w bezpiecznym, prywatnym miejscu.</li>
+  <li>Wyślij swój <strong>klucz publiczny</strong> osobom, które będą do Ciebie pisać.</li>
+  <li>Poproś każdą z nich o <strong>jej</strong> klucz publiczny, aby móc odpisywać.</li>
+</ol>
+
+<h3 id="m-encrypt">Wysyłanie tajnej wiadomości: Szyfruj</h3>
+<ol>
+  <li>Otwórz kartę <strong>Szyfruj</strong>.</li>
+  <li>W polu <strong>Klucz publiczny odbiorcy</strong> wklej klucz publiczny osoby, do której piszesz, albo użyj przycisku <strong>Wczytaj plik klucza</strong>.</li>
+  <li>Wpisz tekst w polu <strong>Wiadomość</strong>.</li>
+  <li>Naciśnij <strong>Szyfruj</strong>, a potem <strong>Kopiuj zaszyfrowany tekst</strong>.</li>
+  <li>Wklej go do SMS-a, e-maila lub komunikatora i wyślij.</li>
+</ol>
+<p class="tip">Użyj klucza publicznego <em>odbiorcy</em>, a nie własnego. Wiadomość zamkniętą własnym kluczem otworzysz tylko Ty.</p>
+
+<h3 id="m-decrypt">Czytanie tajnej wiadomości: Odszyfruj</h3>
+<ol>
+  <li>Otwórz kartę <strong>Odszyfruj</strong>.</li>
+  <li>W polu <strong>Klucz prywatny</strong> wklej swój klucz prywatny albo użyj przycisku <strong>Wczytaj plik klucza</strong>.</li>
+  <li>Wklej cały otrzymany tekst, zaczynający się od <code>PGP1:</code>, w pole <strong>Zaszyfrowana wiadomość</strong>.</li>
+  <li>Jeśli Twój klucz ma hasło, wpisz je w polu <strong>Hasło klucza prywatnego</strong>.</li>
+  <li>Naciśnij <strong>Odszyfruj</strong>. Czytelny tekst pojawi się w polu <strong>Tekst jawny</strong>.</li>
+</ol>
+
+<h3 id="m-keys">Tworzenie pary kluczy</h3>
+<ol>
+  <li>Otwórz kartę <strong>Utwórz parę kluczy</strong>.</li>
+  <li>Podaj <strong>Nazwa</strong> oraz <strong>E-mail</strong>. To tylko etykiety, dzięki którym inni rozpoznają Twój klucz. Na ten adres nic nie jest wysyłane.</li>
+  <li>Wybierz <strong>Hasło klucza prywatnego</strong>. Jest opcjonalne, ale bardzo zalecane.</li>
+  <li>Naciśnij <strong>Generuj parę kluczy</strong>.</li>
+  <li>Użyj <strong>Pobierz .asc</strong> dla obu kluczy albo <strong>Kopiuj</strong>, aby je skopiować.</li>
+</ol>
+<p class="tip danger"><strong>Nie ma możliwości odzyskania.</strong> Jeśli zgubisz klucz prywatny lub zapomnisz jego hasło, wiadomości wysłane do Ciebie nie będą już nigdy do odczytania. Nikt, także my, nie może ich przywrócić.</p>
+
+<h3 id="m-problems">Gdy coś nie działa</h3>
+<table>
+  <tr><th>Komunikat na ekranie</th><th>Co oznacza i co zrobić</th></tr>
+  <tr><td>Decryption key is not decrypted</td><td>Twój klucz prywatny ma hasło, ale go nie podano. Wpisz je w polu <strong>Hasło klucza prywatnego</strong> i ponownie naciśnij <strong>Odszyfruj</strong>.</td></tr>
+  <tr><td>Incorrect key passphrase</td><td>Hasło jest błędne. Sprawdź literówki i Caps Lock.</td></tr>
+  <tr><td>No decryption key packets found</td><td>Wiadomość zamknięto dla innego klucza. Nadawca prawdopodobnie użył cudzego klucza publicznego albo wkleiłeś niewłaściwy klucz prywatny.</td></tr>
+  <tr><td>Error during parsing</td><td>Zaszyfrowany tekst jest niekompletny lub zmieniony. Poproś o niego ponownie i upewnij się, że skopiowano całość, od <code>PGP1:</code> do ostatniego znaku.</td></tr>
+  <tr><td>Misformed armored text</td><td>To nie jest poprawny klucz. Wklej cały blok, razem z liniami <code>-----BEGIN</code> i <code>-----END</code>.</td></tr>
+</table>
+<p class="tip">Zaszyfrowany tekst jest kilka razy dłuższy od oryginału. Telefon może podzielić długą wiadomość na kilka SMS-ów. Odbiorca musi połączyć wszystkie części, we właściwej kolejności, przed odszyfrowaniem.</p>
+<p>Komunikaty techniczne pochodzą z biblioteki szyfrującej i są wyświetlane po angielsku.</p>
+
+<h3 id="m-safety">Zasady bezpieczeństwa</h3>
+<ul>
+  <li>Nigdy nikomu nie wysyłaj <strong>klucza prywatnego</strong>. Udostępnia się wyłącznie klucz publiczny.</li>
+  <li>Chroń klucz prywatny hasłem i nie zapisuj hasła obok pliku z kluczem.</li>
+  <li>Miej kopię zapasową pliku klucza prywatnego, na przykład na zaszyfrowanym pendrivie.</li>
+  <li>Zanim wyślesz coś poufnego, potwierdź nowy klucz publiczny z jego właścicielem, na przykład telefonicznie.</li>
+</ul>
+
+<h3 id="m-test">Szybki test w dwie minuty</h3>
+<p>Przydatny dla testerów lub by sprawdzić, że wszystko działa, zanim zaczniesz na tym polegać.</p>
+<ol>
+  <li><strong>Utwórz parę kluczy</strong>: wygeneruj parę z hasłem <code>test</code>.</li>
+  <li><strong>Szyfruj</strong>: wklej nowy klucz <em>publiczny</em>, wpisz <code>hello</code>, naciśnij <strong>Szyfruj</strong>, skopiuj wynik.</li>
+  <li><strong>Odszyfruj</strong>: wklej nowy klucz <em>prywatny</em>, wklej skopiowany tekst, wpisz <code>test</code>, naciśnij <strong>Odszyfruj</strong>.</li>
+  <li>Oczekiwany wynik: w polu <strong>Tekst jawny</strong> pojawia się <code>hello</code>.</li>
+</ol>

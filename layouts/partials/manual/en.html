@@ -1,0 +1,95 @@
+<ul class="help-toc">
+  <li><a href="#m-what">What it is</a></li>
+  <li><a href="#m-words">Key words</a></li>
+  <li><a href="#m-start">First time</a></li>
+  <li><a href="#m-encrypt">Encrypt</a></li>
+  <li><a href="#m-decrypt">Decrypt</a></li>
+  <li><a href="#m-keys">Create keys</a></li>
+  <li><a href="#m-problems">Problems</a></li>
+  <li><a href="#m-safety">Safety</a></li>
+  <li><a href="#m-test">Quick test</a></li>
+</ul>
+
+<h3 id="m-what">What this tool does</h3>
+<p>PGP SMS turns a short text message into scrambled text that only one chosen person can read. You can then send that scrambled text by SMS, email or chat. Anyone who intercepts it sees meaningless characters.</p>
+<p><strong>Nothing leaves your browser.</strong> There is no server behind this page. Your messages, keys and passwords are never sent anywhere, and closing the tab erases them.</p>
+
+<h3 id="m-words">Key words, in plain language</h3>
+<p>Think of a padlock and its key.</p>
+<dl>
+  <dt>Public key: the open padlock</dt>
+  <dd>You can hand out copies freely. Anyone holding it can lock a message for you, but nobody can unlock it with it. Safe to email or publish.</dd>
+  <dt>Private key: the only key to that padlock</dt>
+  <dd>It unlocks messages that were locked with your public key. Keep it secret, like a house key. Whoever has it can read your messages.</dd>
+  <dt>Key pair</dt>
+  <dd>A matching public key and private key, created together. Each person needs their own pair.</dd>
+  <dt>Passphrase</dt>
+  <dd>A password that protects your private key. Even if someone copies the key file, they cannot use it without the passphrase.</dd>
+  <dt>Encrypted message, or <code>PGP1:</code> text</dt>
+  <dd>The scrambled result. It starts with <code>PGP1:</code> followed by a long run of letters and digits. It must be copied whole: a single missing character breaks it.</dd>
+</dl>
+
+<h3 id="m-start">First-time setup</h3>
+<ol>
+  <li>Open the <strong>Create key pair</strong> tab and create your own key pair.</li>
+  <li>Save your private key with <strong>Download .asc</strong> and store the file somewhere safe and private.</li>
+  <li>Send your <strong>public key</strong> to the people who will write to you.</li>
+  <li>Ask each of them for <strong>their</strong> public key, so you can write back.</li>
+</ol>
+
+<h3 id="m-encrypt">Send a secret message: Encrypt</h3>
+<ol>
+  <li>Open the <strong>Encrypt</strong> tab.</li>
+  <li>In <strong>Recipient public key</strong>, paste the public key of the person you are writing to, or use <strong>Load key file</strong>.</li>
+  <li>Type your text in <strong>Message</strong>.</li>
+  <li>Press <strong>Encrypt</strong>, then <strong>Copy encrypted text</strong>.</li>
+  <li>Paste it into your SMS, email or chat and send it.</li>
+</ol>
+<p class="tip">Use the <em>recipient's</em> public key, not your own. A message locked with your own key can only be opened by you.</p>
+
+<h3 id="m-decrypt">Read a secret message: Decrypt</h3>
+<ol>
+  <li>Open the <strong>Decrypt</strong> tab.</li>
+  <li>In <strong>Private key</strong>, paste your own private key, or use <strong>Load key file</strong>.</li>
+  <li>Paste the whole received text, starting with <code>PGP1:</code>, into <strong>Encrypted message</strong>.</li>
+  <li>If your key has a passphrase, type it into <strong>Private-key passphrase</strong>.</li>
+  <li>Press <strong>Decrypt</strong>. The readable text appears under <strong>Plaintext</strong>.</li>
+</ol>
+
+<h3 id="m-keys">Create a key pair</h3>
+<ol>
+  <li>Open the <strong>Create key pair</strong> tab.</li>
+  <li>Enter a <strong>Name</strong> and an <strong>Email</strong>. They are labels that help others recognise your key. Nothing is sent to that address.</li>
+  <li>Choose a <strong>Private-key passphrase</strong>. It is optional, but strongly recommended.</li>
+  <li>Press <strong>Generate key pair</strong>.</li>
+  <li>Use <strong>Download .asc</strong> for both keys, or <strong>Copy</strong> to copy them.</li>
+</ol>
+<p class="tip danger"><strong>There is no recovery.</strong> If you lose your private key or forget its passphrase, messages sent to you can never be read again. Nobody, including us, can restore them.</p>
+
+<h3 id="m-problems">When something goes wrong</h3>
+<table>
+  <tr><th>Message on screen</th><th>What it means and what to do</th></tr>
+  <tr><td>Decryption key is not decrypted</td><td>Your private key has a passphrase, but none was entered. Type it into <strong>Private-key passphrase</strong> and press <strong>Decrypt</strong> again.</td></tr>
+  <tr><td>Incorrect key passphrase</td><td>The passphrase is wrong. Check for typos and Caps Lock.</td></tr>
+  <tr><td>No decryption key packets found</td><td>The message was locked for a different key. The sender probably used someone else's public key, or you pasted the wrong private key.</td></tr>
+  <tr><td>Error during parsing</td><td>The encrypted text is incomplete or altered. Ask for it again and make sure all of it, from <code>PGP1:</code> to the last character, is copied.</td></tr>
+  <tr><td>Misformed armored text</td><td>The key is not a valid key. Paste the whole block, including the <code>-----BEGIN</code> and <code>-----END</code> lines.</td></tr>
+</table>
+<p class="tip">Encrypted text is several times longer than the original. A long message may be split into several SMS by your phone. The receiver must join all parts, in order, before decrypting.</p>
+
+<h3 id="m-safety">Safety rules</h3>
+<ul>
+  <li>Never send your <strong>private key</strong> to anyone. Only the public key is meant to be shared.</li>
+  <li>Protect the private key with a passphrase and do not write the passphrase next to the key file.</li>
+  <li>Keep a backup of the private key file, for example on an encrypted USB drive.</li>
+  <li>Check a new public key with its owner, for example by phone, before sending anything sensitive.</li>
+</ul>
+
+<h3 id="m-test">Quick test in two minutes</h3>
+<p>Useful for testers, or to check everything works before relying on it.</p>
+<ol>
+  <li><strong>Create key pair</strong>: generate a pair with the passphrase <code>test</code>.</li>
+  <li><strong>Encrypt</strong>: paste the new <em>public</em> key, type <code>hello</code>, press <strong>Encrypt</strong>, copy the result.</li>
+  <li><strong>Decrypt</strong>: paste the new <em>private</em> key, paste the copied text, enter <code>test</code>, press <strong>Decrypt</strong>.</li>
+  <li>Expected result: <code>hello</code> appears under <strong>Plaintext</strong>.</li>
+</ol>

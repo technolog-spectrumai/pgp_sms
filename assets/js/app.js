@@ -247,3 +247,33 @@ $('downloadPrivateKeyBtn').addEventListener('click', () => {
   downloadText(`${base}-private.asc`, $('generatedPrivateKey').value);
   setStatus('keygenStatus', I18N.privateDownloaded);
 });
+
+/* ------------------------------------------------------------------ *
+ * Manual: a native <dialog>, so Esc, focus trapping and the backdrop
+ * come from the browser. Clicking outside the panel also closes it.
+ * ------------------------------------------------------------------ */
+
+const helpDialog = $('helpDialog');
+
+$('helpBtn').addEventListener('click', () => {
+  if (helpDialog.open) return;
+  helpDialog.showModal();
+  // Only a rendered (open) dialog can be scrolled, so reset after opening.
+  helpDialog.querySelector('.help-body').scrollTop = 0;
+});
+
+$('helpClose').addEventListener('click', () => helpDialog.close());
+
+helpDialog.addEventListener('click', event => {
+  if (event.target === helpDialog) helpDialog.close();
+});
+
+// Table-of-contents links scroll inside the dialog instead of the page.
+helpDialog.addEventListener('click', event => {
+  const link = event.target.closest('a[href^="#"]');
+  if (!link) return;
+  const target = helpDialog.querySelector(link.getAttribute('href'));
+  if (!target) return;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});

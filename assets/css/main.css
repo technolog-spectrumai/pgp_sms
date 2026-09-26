@@ -68,6 +68,7 @@ input[type="file"] { display: none; }
 .status { min-height: 1.25em; margin-top: 10px; color: var(--muted); font-size: .74rem; line-height: 1.45; }
 .status.error { color: var(--danger); }
 .footer-note { margin-top: 14px; color: var(--muted-2); font-size: .72rem; line-height: 1.5; }
+.copyright { margin-top: 6px; color: var(--muted-2); font-size: .66rem; }
 code { padding: 2px 5px; border: 1px solid var(--line-soft); border-radius: 5px; background: var(--field); color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; font-size: .7rem; }
 @media (max-width: 800px) {
   .topbar { align-items: flex-start; flex-direction: column; }

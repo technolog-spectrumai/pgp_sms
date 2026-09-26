@@ -207,3 +207,12 @@ other = "Public key downloaded."
 
 [js_private_downloaded]
 other = "Private key downloaded. Keep it secret."
+
+[help_open]
+other = "Open the manual"
+
+[help_title]
+other = "Manual"
+
+[help_close]
+other = "Close"

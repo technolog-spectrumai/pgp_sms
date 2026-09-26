@@ -1,33 +1,36 @@
 # PGP SMS
 
-Small Hugo static site for browser-side OpenPGP encryption/decryption, key generation,
-and exporting keys as QR images.
+Hugo static site with Polish and English using Hugo i18n. Browser-side OpenPGP
+encryption, decryption, key generation, and exporting keys as QR images.
+
+## Languages
+
+- Polish (default): `/`
+- English: `/en/`
+
+Translation files:
+
+```text
+i18n/pl.toml
+i18n/en.toml
+```
+
+UI strings and JavaScript status/error messages use the same Hugo translation files.
+JavaScript strings are passed to `assets/js/app.js` through the `app-i18n` JSON block at the
+bottom of `layouts/index.html`, so a new message needs three edits: the key in both `.toml`
+files, and an entry in that JSON block.
 
 ## Local development
-
-Install Hugo Extended, then run:
 
 ```bash
 hugo server
 ```
 
-Open:
-
-```text
-http://localhost:1313
-```
-
 ## Netlify
 
-The repository includes `netlify.toml`.
+The included `netlify.toml` builds with `hugo --gc --minify` and publishes `public/`.
 
-Netlify build settings are:
-
-- Build command: `hugo --gc --minify`
-- Publish directory: `public`
-- Hugo version: pinned in `netlify.toml`
-
-Push the project to GitHub/GitLab/Bitbucket, import it into Netlify, and deploy.
+OpenPGP.js is currently loaded from the pinned CDN URL in `assets/js/app.js`.
 
 ## Key QR
 
@@ -45,6 +48,18 @@ error-correction level. **RSA keys do not fit** and are rejected with an explana
 > use the key. Protect the key with a passphrase before exporting it, and keep the PNG out of
 > cloud-synced photo folders. The tab warns you, and warns harder when the key has no
 > passphrase.
+
+### Vendored QR library
+
+`assets/js/vendor/qrcode.min.js` is a prebuilt, encode-only bundle of
+[@nuintun/qrcode](https://github.com/nuintun/qrcode) 5.0.3 (MIT, licence text in
+`assets/js/vendor/qrcode.LICENSE`). The header of that file records the exact command that
+regenerates it. It is served from this origin, not a CDN, and encodes locally with no network
+access of its own. It adds 27 KB raw, 9 KB gzipped.
+
+`layouts/_default/baseof.html` runs `assets/js/app.js` through Hugo's `js.Build`, which bundles
+the vendored module into the single fingerprinted script the page loads under its SRI
+`integrity` hash. The remote OpenPGP.js import is left untouched by the bundler.
 
 ## TODO
 
@@ -82,24 +97,8 @@ Notes from evaluating it:
 
 The site has no application backend. OpenPGP operations run in the browser.
 
-OpenPGP.js is currently loaded from the pinned CDN URL:
-
-```text
-https://unpkg.com/openpgp@6.3.1/dist/openpgp.min.mjs
-```
-
 For a fully self-contained deployment, vendor the OpenPGP.js module into `assets/js/vendor/`
-and change the import in `assets/js/app.js`.
-
-The QR library is already vendored that way. `assets/js/vendor/qrcode.min.js` is a prebuilt,
-encode-only bundle of [@nuintun/qrcode](https://github.com/nuintun/qrcode) 5.0.3 (MIT, licence
-text in `assets/js/vendor/qrcode.LICENSE`); the header of that file records the exact command
-that regenerates it. It is served from this origin, not a CDN, and encodes locally with no
-network access of its own.
-
-`layouts/_default/baseof.html` runs `assets/js/app.js` through Hugo's `js.Build`, which bundles
-the vendored module into the single fingerprinted script the page loads under its SRI
-`integrity` hash. The remote OpenPGP.js import is left untouched by the bundler.
+the way the QR library already is, and change the import in `assets/js/app.js`.
 
 `PGP1:` is only an SMS-friendly transport wrapper:
 

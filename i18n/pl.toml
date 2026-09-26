@@ -1,0 +1,332 @@
+[brand_kicker]
+other = "Narzędzie do bezpiecznej komunikacji"
+
+[subtitle]
+other = "Szyfruj tekst do wysłania przez SMS, odszyfrowuj wiadomości OpenPGP i twórz pary kluczy bezpośrednio w przeglądarce."
+
+[client_side_only]
+other = "tylko po stronie klienta"
+
+[tools]
+other = "Narzędzia"
+
+[tab_encrypt]
+other = "Szyfruj"
+
+[tab_encrypt_desc]
+other = "Klucz publiczny → zaszyfrowany ładunek SMS"
+
+[tab_decrypt]
+other = "Odszyfruj"
+
+[tab_decrypt_desc]
+other = "Klucz prywatny → tekst jawny"
+
+[tab_keygen]
+other = "Utwórz parę kluczy"
+
+[tab_keygen_desc]
+other = "Generuj klucze OpenPGP lokalnie"
+
+[encrypt_title]
+other = "Szyfruj wiadomość"
+
+[encrypt_intro]
+other = "Użyj klucza publicznego odbiorcy. Wynik jest przygotowany do skopiowania do SMS."
+
+[recipient_public_key]
+other = "Klucz publiczny odbiorcy"
+
+[openpgp]
+other = "OpenPGP"
+
+[load_key_file]
+other = "Wczytaj plik klucza"
+
+[message]
+other = "Wiadomość"
+
+[plaintext]
+other = "tekst jawny"
+
+[message_placeholder]
+other = "Wpisz wiadomość do zaszyfrowania..."
+
+[encrypted_sms_payload]
+other = "Zaszyfrowany ładunek SMS"
+
+[encrypt]
+other = "Szyfruj"
+
+[copy_encrypted]
+other = "Kopiuj zaszyfrowany tekst"
+
+[decrypt_title]
+other = "Odszyfruj wiadomość"
+
+[decrypt_intro]
+other = "Wklej zaszyfrowany ładunek SMS i odblokuj klucz prywatny, jeśli jest to wymagane."
+
+[private_key]
+other = "Klucz prywatny"
+
+[secret]
+other = "tajne"
+
+[encrypted_message]
+other = "Zaszyfrowana wiadomość"
+
+[armored]
+other = "PGP1 / armored"
+
+[encrypted_placeholder]
+other = "Wklej PGP1:... albo wiadomość OpenPGP w formacie armored"
+
+[private_key_passphrase]
+other = "Hasło klucza prywatnego"
+
+[optional]
+other = "opcjonalne"
+
+[passphrase_placeholder]
+other = "Pozostaw puste, jeśli klucz nie jest chroniony"
+
+[output]
+other = "wynik"
+
+[decrypted_placeholder]
+other = "Odszyfrowana wiadomość pojawi się tutaj"
+
+[decrypt]
+other = "Odszyfruj"
+
+[copy_plaintext]
+other = "Kopiuj tekst jawny"
+
+[keygen_title]
+other = "Utwórz parę kluczy"
+
+[keygen_intro]
+other = "Wygeneruj parę kluczy publiczny/prywatny OpenPGP lokalnie w przeglądarce."
+
+[name]
+other = "Nazwa"
+
+[identity]
+other = "tożsamość"
+
+[email]
+other = "E-mail"
+
+[key_passphrase]
+other = "Hasło klucza prywatnego"
+
+[recommended]
+other = "zalecane"
+
+[key_passphrase_placeholder]
+other = "Opcjonalne, ale zalecane"
+
+[generate_key_pair]
+other = "Generuj parę kluczy"
+
+[public_key]
+other = "Klucz publiczny"
+
+[shareable]
+other = "do udostępniania"
+
+[generated_public_placeholder]
+other = "Wygenerowany klucz publiczny pojawi się tutaj"
+
+[copy]
+other = "Kopiuj"
+
+[download_asc]
+other = "Pobierz .asc"
+
+[generated_private_placeholder]
+other = "Wygenerowany klucz prywatny pojawi się tutaj"
+
+[keep_secret]
+other = "zachowaj w tajemnicy"
+
+[footer_prefix]
+other = "to tylko opakowanie transportowe:"
+
+[footer_suffix]
+other = "Dane binarne OpenPGP zakodowane w Base64 i poprzedzone prefiksem"
+
+[footer_browser]
+other = "Operacje kryptograficzne odbywają się w przeglądarce."
+
+[js_load_recipient_key]
+other = "Wklej lub wczytaj klucz publiczny odbiorcy."
+
+[js_enter_message]
+other = "Wpisz wiadomość."
+
+[js_encrypted_success]
+other = "Szyfrowanie zakończone."
+
+[js_chars_plain]
+other = "znaków tekstu jawnego"
+
+[js_chars_transport]
+other = "znaków transportowych"
+
+[js_load_private_key]
+other = "Wklej lub wczytaj klucz prywatny."
+
+[js_paste_encrypted]
+other = "Wklej zaszyfrowaną wiadomość."
+
+[js_decryption_success]
+other = "Odszyfrowano poprawnie."
+
+[js_decryption_failed]
+other = "Odszyfrowanie nie powiodło się:"
+
+[js_enter_name]
+other = "Wpisz nazwę."
+
+[js_enter_email]
+other = "Wpisz adres e-mail."
+
+[js_generating_key]
+other = "Generowanie pary kluczy..."
+
+[js_key_generated]
+other = "Para kluczy została wygenerowana lokalnie. Zapisz bezpiecznie klucz prywatny."
+
+[js_copied]
+other = "Skopiowano do schowka."
+
+[js_public_downloaded]
+other = "Pobrano klucz publiczny."
+
+[js_private_downloaded]
+other = "Pobrano klucz prywatny. Zachowaj go w tajemnicy."
+
+[tab_qr]
+other = "Kod QR klucza"
+
+[tab_qr_desc]
+other = "Eksport kluczy jako obrazy QR"
+
+[show_qr]
+other = "Pokaż QR"
+
+[qr_title]
+other = "Kod QR klucza"
+
+[qr_intro]
+other = "Wyeksportuj klucz OpenPGP jako obraz QR, który możesz wydrukować lub zeskanować z innego urządzenia."
+
+[qr_key_to_encode]
+other = "Klucz do zakodowania"
+
+[qr_none_selected]
+other = "nie wybrano"
+
+[qr_source_placeholder]
+other = "Użyj przycisku Pokaż QR na karcie Szyfrowanie, Deszyfrowanie lub Utwórz parę kluczy."
+
+[qr_image_title]
+other = "Tytuł obrazu"
+
+[qr_printed_above]
+other = "drukowany u góry"
+
+[qr_title_placeholder]
+other = "KLUCZ PUBLICZNY PGP"
+
+[qr_error_correction]
+other = "Korekcja błędów"
+
+[qr_recovery]
+other = "odzysk"
+
+[qr_level_l]
+other = "L — 7%, najmniejszy obraz"
+
+[qr_level_m]
+other = "M — 15%, zrównoważony"
+
+[qr_level_q]
+other = "Q — 25%"
+
+[qr_level_h]
+other = "H — 30%, najlepszy do druku"
+
+[qr_generate]
+other = "Generuj QR"
+
+[qr_download_png]
+other = "Pobierz PNG"
+
+[qr_image]
+other = "Obraz QR"
+
+[qr_png_preview]
+other = "PNG / podgląd"
+
+[qr_empty]
+other = "Nie wygenerowano jeszcze kodu QR."
+
+[js_qr_public_key]
+other = "klucz publiczny"
+
+[js_qr_private_key]
+other = "klucz prywatny"
+
+[js_qr_unreadable]
+other = "nieczytelny"
+
+[js_qr_not_a_key]
+other = "To nie jest czytelny klucz OpenPGP:"
+
+[js_qr_no_key_available]
+other = "Brak dostępnego klucza."
+
+[js_qr_no_key_loaded]
+other = "Nie wczytano klucza. Użyj przycisku Pokaż QR na innej karcie."
+
+[js_qr_loaded]
+other = "Wczytano klucz dla"
+
+[js_qr_unknown_user]
+other = "nieznany użytkownik"
+
+[js_qr_title_public]
+other = "KLUCZ PUBLICZNY PGP"
+
+[js_qr_title_private]
+other = "KLUCZ PRYWATNY PGP"
+
+[js_qr_warn_private]
+other = "Kod QR klucza prywatnego jest tajemnicą. Każdy, kto sfotografuje lub skopiuje ten obraz, może próbować użyć klucza. Przechowuj plik PNG offline, a nie w synchronizowanym folderze ze zdjęciami."
+
+[js_qr_warn_unprotected]
+other = "Ten klucz prywatny NIE MA hasła. Każdy, kto zobaczy ten obraz, przejmuje klucz. Wygeneruj klucz z hasłem, zanim go wyeksportujesz."
+
+[js_qr_encoded]
+other = "zakodowano"
+
+[js_qr_too_large]
+other = "Pojedynczy kod QR mieści najwyżej 2953 bajty, więc klucze RSA się nie mieszczą. Użyj niższego poziomu korekcji błędów lub klucza ECC (curve25519)."
+
+[js_qr_build_failed]
+other = "Nie udało się zbudować kodu QR:"
+
+[js_qr_generate_first]
+other = "Najpierw wygeneruj kod QR."
+
+[js_qr_downloaded]
+other = "Pobrano"
+
+[js_key_protected]
+other = "Ten klucz prywatny jest chroniony hasłem. Podaj hasło, aby odszyfrować."
+
+[js_key_unlock_failed]
+other = "Nie udało się odblokować klucza prywatnego. Sprawdź hasło i spróbuj ponownie."

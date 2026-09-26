@@ -3,6 +3,7 @@ import * as openpgp from 'https://unpkg.com/openpgp@6.3.1/dist/openpgp.min.mjs';
 import { Encoder, Byte } from './vendor/qrcode.min.js';
 
 const $ = id => document.getElementById(id);
+const I18N = JSON.parse(document.getElementById('app-i18n')?.textContent || '{}');
 
 function activateTab(name) {
   const config = {
@@ -68,8 +69,8 @@ $('encryptBtn').addEventListener('click', async () => {
     const armoredKey = $('publicKey').value.trim();
     const plaintext = $('plainText').value;
 
-    if (!armoredKey) throw new Error('Paste or load the recipient public key.');
-    if (!plaintext) throw new Error('Enter a message.');
+    if (!armoredKey) throw new Error(I18N.loadRecipientKey);
+    if (!plaintext) throw new Error(I18N.enterMessage);
 
     const publicKey = await openpgp.readKey({ armoredKey });
     const message = await openpgp.createMessage({ text: plaintext });
@@ -91,7 +92,7 @@ $('encryptBtn').addEventListener('click', async () => {
 
     setStatus(
       'encryptStatus',
-      `Encrypted successfully. ${plaintext.length} plaintext characters → ${output.length} transport characters.`
+      `${I18N.encryptedSuccess} ${plaintext.length} ${I18N.charsPlain} → ${output.length} ${I18N.charsTransport}.`
     );
   } catch (err) {
     setStatus('encryptStatus', err?.message || String(err), true);
@@ -107,8 +108,8 @@ $('decryptBtn').addEventListener('click', async () => {
     const encryptedInput = $('cipherText').value.trim();
     const passphrase = $('passphrase').value;
 
-    if (!armoredPrivateKey) throw new Error('Paste or load your private key.');
-    if (!encryptedInput) throw new Error('Paste the encrypted message.');
+    if (!armoredPrivateKey) throw new Error(I18N.loadPrivateKey);
+    if (!encryptedInput) throw new Error(I18N.pasteEncrypted);
 
     let privateKey = await openpgp.readPrivateKey({
       armoredKey: armoredPrivateKey
@@ -116,9 +117,7 @@ $('decryptBtn').addEventListener('click', async () => {
 
     if (!privateKey.isDecrypted()) {
       if (!passphrase) {
-        throw new Error(
-          'This private key is passphrase-protected. Enter its passphrase to decrypt.'
-        );
+        throw new Error(I18N.keyProtected);
       }
 
       try {
@@ -127,9 +126,7 @@ $('decryptBtn').addEventListener('click', async () => {
           passphrase
         });
       } catch (err) {
-        throw new Error(
-          'Could not unlock the private key. Check the passphrase and try again.'
-        );
+        throw new Error(I18N.keyUnlockFailed);
       }
     }
 
@@ -154,11 +151,11 @@ $('decryptBtn').addEventListener('click', async () => {
         ? data
         : new TextDecoder().decode(data);
 
-    setStatus('decryptStatus', 'Decryption successful.');
+    setStatus('decryptStatus', I18N.decryptionSuccess);
   } catch (err) {
     setStatus(
       'decryptStatus',
-      'Decryption failed: ' + (err?.message || String(err)),
+      I18N.decryptionFailed + ' ' + (err?.message || String(err)),
       true
     );
   }
@@ -199,10 +196,10 @@ $('generateKeyBtn').addEventListener('click', async () => {
     const email = $('keyEmail').value.trim();
     const passphrase = $('keyPassphrase').value;
 
-    if (!name) throw new Error('Enter a name.');
-    if (!email) throw new Error('Enter an email address.');
+    if (!name) throw new Error(I18N.enterName);
+    if (!email) throw new Error(I18N.enterEmail);
 
-    setStatus('keygenStatus', 'Generating key pair...');
+    setStatus('keygenStatus', I18N.generatingKey);
 
     const options = {
       type: 'ecc',
@@ -222,7 +219,7 @@ $('generateKeyBtn').addEventListener('click', async () => {
 
     setStatus(
       'keygenStatus',
-      'Key pair generated locally. Save the private key securely.'
+      I18N.keyGenerated
     );
   } catch (err) {
     setStatus('keygenStatus', err?.message || String(err), true);
@@ -233,7 +230,7 @@ async function copyFrom(id, statusId) {
   const value = $(id).value;
   if (!value) return;
   await navigator.clipboard.writeText(value);
-  setStatus(statusId, 'Copied to clipboard.');
+  setStatus(statusId, I18N.copied);
 }
 
 $('copyEncryptedBtn').addEventListener('click',
@@ -254,7 +251,7 @@ $('downloadPublicKeyBtn').addEventListener('click', () => {
     'pgp'
   );
   downloadText(`${base}-public.asc`, $('generatedPublicKey').value);
-  setStatus('keygenStatus', 'Public key downloaded.');
+  setStatus('keygenStatus', I18N.publicDownloaded);
 });
 
 $('downloadPrivateKeyBtn').addEventListener('click', () => {
@@ -263,7 +260,7 @@ $('downloadPrivateKeyBtn').addEventListener('click', () => {
     'pgp'
   );
   downloadText(`${base}-private.asc`, $('generatedPrivateKey').value);
-  setStatus('keygenStatus', 'Private key downloaded. Keep it secret.');
+  setStatus('keygenStatus', I18N.privateDownloaded);
 });
 
 /* ------------------------------------------------------------------ *
@@ -277,7 +274,7 @@ const QR_CAPACITY = { L: 2953, M: 2331, Q: 1663, H: 1273 };
 const QUIET_MODULES = 4;
 const MONO = '"SFMono-Regular", Consolas, ui-monospace, monospace';
 
-let qrState = { text: '', kind: '', filenameBase: 'key' };
+let qrState = { text: '', kind: '', isPrivate: false, filenameBase: 'key' };
 
 function groupFingerprint(fp) {
   return (fp.toUpperCase().match(/.{1,4}/g) || []).join(' ');
@@ -408,11 +405,11 @@ async function showQrFor(armoredText, fallbackKind) {
   activateTab('qr');
 
   if (!text) {
-    qrState = { text: '', kind: '', filenameBase: 'key' };
+    qrState = { text: '', kind: '', isPrivate: false, filenameBase: 'key' };
     $('qrSource').value = '';
-    $('qrSourceKind').textContent = 'none selected';
+    $('qrSourceKind').textContent = I18N.qrNoneSelected;
     setQrWarning('');
-    setStatus('qrStatus', `No ${fallbackKind} available yet.`, true);
+    setStatus('qrStatus', I18N.qrNoKeyAvailable, true);
     return;
   }
 
@@ -420,38 +417,33 @@ async function showQrFor(armoredText, fallbackKind) {
   try {
     info = await describeKey(text);
   } catch (err) {
-    qrState = { text: '', kind: '', filenameBase: 'key' };
+    qrState = { text: '', kind: '', isPrivate: false, filenameBase: 'key' };
     $('qrSource').value = text;
-    $('qrSourceKind').textContent = 'unreadable';
+    $('qrSourceKind').textContent = I18N.qrUnreadable;
     setQrWarning('');
-    setStatus('qrStatus', 'That is not a readable OpenPGP key: ' + (err?.message || String(err)), true);
+    setStatus('qrStatus', I18N.qrNotAKey + ' ' + (err?.message || String(err)), true);
     return;
   }
 
-  const kind = info.isPrivate ? 'private key' : 'public key';
+  const kind = info.isPrivate ? I18N.qrPrivateKey : I18N.qrPublicKey;
   qrState = {
     text,
     kind,
+    isPrivate: info.isPrivate,
     filenameBase: sanitizeFilenamePart(info.userID || 'key', 'key')
   };
 
   $('qrSource').value = text;
   $('qrSourceKind').textContent = kind;
-  $('qrTitle').value = info.isPrivate ? 'PGP PRIVATE KEY' : 'PGP PUBLIC KEY';
+  $('qrTitle').value = info.isPrivate ? I18N.qrTitlePrivate : I18N.qrTitlePublic;
 
   if (info.isPrivate) {
-    setQrWarning(
-      info.unprotected
-        ? 'This private key has NO passphrase. Anyone who sees this image owns the key. '
-          + 'Generate the key with a passphrase before exporting it.'
-        : 'A private key QR is a secret. Anyone who photographs or copies the image can '
-          + 'attempt to use the key. Store the PNG offline, not in a synced photo folder.'
-    );
+    setQrWarning(info.unprotected ? I18N.qrWarnUnprotected : I18N.qrWarnPrivate);
   } else {
     setQrWarning('');
   }
 
-  setStatus('qrStatus', `Loaded ${kind} for ${info.userID || 'unknown user'}. Press Generate QR.`);
+  setStatus('qrStatus', `${I18N.qrLoaded} ${info.userID || I18N.qrUnknownUser} (${kind}).`);
   await generateQr();
 }
 
@@ -460,7 +452,7 @@ async function generateQr() {
   const level = $('qrLevel').value;
 
   if (!text) {
-    setStatus('qrStatus', 'No key loaded. Use a Show QR button on another tab.', true);
+    setStatus('qrStatus', I18N.qrNoKeyLoaded, true);
     return;
   }
 
@@ -471,13 +463,7 @@ async function generateQr() {
     $('qrCanvas').width = 0;
     $('qrCanvas').height = 0;
     $('qrEmpty').hidden = false;
-    setStatus(
-      'qrStatus',
-      `Key is ${bytes} bytes, over the ${limit}-byte limit at level ${level}. `
-        + 'A single QR code tops out at 2953 bytes, so RSA keys do not fit. '
-        + 'Use a lower error-correction level, or an ECC (curve25519) key.',
-      true
-    );
+    setStatus('qrStatus', `${bytes} / ${limit} bytes (level ${level}). ${I18N.qrTooLarge}`, true);
     return;
   }
 
@@ -502,29 +488,28 @@ async function generateQr() {
     $('qrEmpty').hidden = true;
     setStatus(
       'qrStatus',
-      `${qrState.kind || 'Key'} encoded: ${bytes} bytes, QR version ${result.version} `
-        + `(${result.modules}x${result.modules} modules), level ${level}, `
-        + `image ${result.width}x${result.height}px.`
+      `${qrState.kind} ${I18N.qrEncoded}: ${bytes} B, QR v${result.version} `
+        + `(${result.modules}x${result.modules}), ${level}, ${result.width}x${result.height} px.`
     );
   } catch (err) {
     $('qrCanvas').width = 0;
     $('qrCanvas').height = 0;
     $('qrEmpty').hidden = false;
-    setStatus('qrStatus', 'Could not build the QR code: ' + (err?.message || String(err)), true);
+    setStatus('qrStatus', I18N.qrBuildFailed + ' ' + (err?.message || String(err)), true);
   }
 }
 
 function downloadQr() {
   const canvas = $('qrCanvas');
   if (!canvas.width || !canvas.height) {
-    setStatus('qrStatus', 'Generate a QR code first.', true);
+    setStatus('qrStatus', I18N.qrGenerateFirst, true);
     return;
   }
 
-  const suffix = qrState.kind === 'private key' ? 'private' : 'public';
+  const suffix = qrState.isPrivate ? 'private' : 'public';
   canvas.toBlob(blob => {
     downloadBlob(`${qrState.filenameBase}-${suffix}-qr.png`, blob);
-    setStatus('qrStatus', `Downloaded ${qrState.filenameBase}-${suffix}-qr.png.`);
+    setStatus('qrStatus', `${I18N.qrDownloaded} ${qrState.filenameBase}-${suffix}-qr.png`);
   }, 'image/png');
 }
 

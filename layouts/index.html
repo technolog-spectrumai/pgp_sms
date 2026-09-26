@@ -61,6 +61,23 @@
         <span class="tab-desc">Generate OpenPGP keys locally</span>
       </span>
     </button>
+
+    <button class="tab" id="qrTab" role="tab" aria-selected="false">
+      <span class="tab-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <path d="M14 14h3v3h-3z"/>
+          <path d="M20 14v3"/>
+          <path d="M17 20h4"/>
+        </svg>
+      </span>
+      <span>
+        <span class="tab-title">Key QR</span>
+        <span class="tab-desc">Export and read keys as QR images</span>
+      </span>
+    </button>
   </div>
 
   <section class="panel active" id="encryptPanel">
@@ -84,6 +101,7 @@
           <div class="actions">
             <label class="file-label" for="publicKeyFile">Load key file</label>
             <input id="publicKeyFile" type="file" accept=".asc,.pgp,.txt">
+            <button class="btn" id="showEncryptPublicQrBtn">Show QR</button>
           </div>
         </div>
 
@@ -133,6 +151,7 @@
           <div class="actions">
             <label class="file-label" for="privateKeyFile">Load key file</label>
             <input id="privateKeyFile" type="file" accept=".asc,.pgp,.txt">
+            <button class="btn" id="showDecryptPrivateQrBtn">Show QR</button>
           </div>
         </div>
 
@@ -222,6 +241,7 @@
           <div class="actions">
             <button class="btn" id="copyPublicKeyBtn">Copy</button>
             <button class="btn" id="downloadPublicKeyBtn">Download .asc</button>
+            <button class="btn" id="showPublicQrBtn">Show QR</button>
           </div>
         </div>
 
@@ -235,7 +255,86 @@
           <div class="actions">
             <button class="btn" id="copyPrivateKeyBtn">Copy</button>
             <button class="btn" id="downloadPrivateKeyBtn">Download .asc</button>
+            <button class="btn" id="showPrivateQrBtn">Show QR</button>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="qrPanel">
+    <div class="panel-head">
+      <div>
+        <h2>Key QR</h2>
+        <p>Export an OpenPGP key as a QR image, or read a key back from an image file.</p>
+      </div>
+      <div class="panel-code">MODULE / QR</div>
+    </div>
+
+    <div class="panel-body">
+      <div class="grid">
+        <div class="field">
+          <div class="field-head">
+            <label for="qrSource">Key to encode</label>
+            <span class="hint" id="qrSourceKind">none selected</span>
+          </div>
+          <textarea id="qrSource" spellcheck="false" readonly
+            placeholder="Use a Show QR button on the Encrypt, Decrypt or Create key pair tab."></textarea>
+        </div>
+
+        <div class="field">
+          <div class="field-head">
+            <label for="qrTitle">Image title</label>
+            <span class="hint">printed above</span>
+          </div>
+          <input id="qrTitle" type="text" autocomplete="off"
+            placeholder="PGP PUBLIC KEY">
+
+          <div class="field-head qr-level-head">
+            <label for="qrLevel">Error correction</label>
+            <span class="hint">recovery</span>
+          </div>
+          <select id="qrLevel">
+            <option value="L">L &mdash; 7%, smallest image</option>
+            <option value="M" selected>M &mdash; 15%, balanced</option>
+            <option value="Q">Q &mdash; 25%</option>
+            <option value="H">H &mdash; 30%, best for print</option>
+          </select>
+
+          <div class="actions">
+            <button class="btn primary" id="generateQrBtn">Generate QR</button>
+            <button class="btn" id="downloadQrBtn">Download PNG</button>
+          </div>
+        </div>
+
+        <div class="field full">
+          <div class="field-head">
+            <label for="qrCanvas">QR image</label>
+            <span class="hint">PNG / preview</span>
+          </div>
+          <div id="qrWarning" class="warn" hidden></div>
+          <div class="qr-card" id="qrCard">
+            <canvas id="qrCanvas" width="0" height="0"></canvas>
+            <p class="qr-empty" id="qrEmpty">No QR generated yet.</p>
+          </div>
+          <div id="qrStatus" class="status"></div>
+        </div>
+
+        <div class="field full">
+          <div class="field-head">
+            <label for="qrDecoded">Read key from image</label>
+            <span class="hint">PNG / JPEG</span>
+          </div>
+          <textarea id="qrDecoded" spellcheck="false" readonly
+            placeholder="Upload a QR image and the key it contains will appear here"></textarea>
+          <div class="actions">
+            <label class="file-label" for="qrImageFile">Load QR image</label>
+            <input id="qrImageFile" type="file" accept="image/*">
+            <button class="btn" id="copyDecodedKeyBtn">Copy key</button>
+            <button class="btn" id="useDecodedPublicBtn">Use for encrypting</button>
+            <button class="btn" id="useDecodedPrivateBtn">Use for decrypting</button>
+          </div>
+          <div id="qrReadStatus" class="status"></div>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@
 <body>
   {{ block "main" . }}{{ end }}
 
-  {{ $js := resources.Get "js/app.js" | minify | fingerprint }}
+  {{ $js := resources.Get "js/app.js" | js.Build (dict "minify" true "format" "esm" "target" "es2020") | fingerprint }}
   <script type="module" src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
 </body>
 </html>
